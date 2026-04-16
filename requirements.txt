@@ -1,0 +1,9 @@
+tensorflow==2.15.0
+opencv-python==4.9.0.80
+numpy>=1.24.0
+Pillow>=10.0.0
+matplotlib>=3.8.0
+PyYAML>=6.0
+labelme>=5.4.0
+
+# Install tflite-runtime separately on Raspberry Pi for the target OS/Python/CPU build.
