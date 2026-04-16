@@ -208,6 +208,4 @@ marimo/_lsp/
 __marimo__/
 
 # Project artifacts
-dataset_split/
-segmentation_dataset/
-rep_images/
+
