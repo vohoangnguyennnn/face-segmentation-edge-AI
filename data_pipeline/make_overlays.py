@@ -2,8 +2,17 @@ import os
 import cv2
 import numpy as np
 
-IMG_DIR = "images"
-MASK_DIR = "masks"
+# ─── Guard: must run from repo root ────────────────────────────────────────
+_ROOT_GUARD = "requirements.txt"
+if not os.path.isfile(_ROOT_GUARD):
+    raise RuntimeError(
+        f"'{_ROOT_GUARD}' not found — run this script from the repo root:\n"
+        f"  python data_pipeline/make_overlays.py\n"
+        f"Current directory: {os.getcwd()}"
+    )
+
+IMG_DIR  = "segmentation_dataset/images"
+MASK_DIR = "segmentation_dataset/masks"
 OUT_DIR = "overlays"
 os.makedirs(OUT_DIR, exist_ok=True)
 
@@ -25,14 +34,11 @@ for img_name in sorted(os.listdir(IMG_DIR)):
     if img is None or mask is None:
         continue
 
-    # ===== tạo mask màu xanh =====
     green_mask = np.zeros_like(img)
-    green_mask[:, :, 1] = mask  # kênh G
+    green_mask[:, :, 1] = mask
 
-    # ===== overlay =====
     overlay = cv2.addWeighted(img, 1.0, green_mask, 0.5, 0)
 
-    # ===== tạo viền =====
     contours, _ = cv2.findContours(mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE)
     cv2.drawContours(overlay, contours, -1, (0, 255, 0), 2)
 

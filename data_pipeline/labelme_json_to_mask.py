@@ -15,6 +15,9 @@ IMG_DIR = DATASET_ROOT / "images"
 MASK_DIR = DATASET_ROOT / "masks"
 LOG_DIR = DATASET_ROOT / "logs"
 
+# ─── Labels to rasterize ────────────────────────────────────────────────────
+# Change to match your Labelme annotation labels.
+# Multiple labels (e.g. {"face", "object"}) are OR'd together into one binary mask.
 VALID_LABELS = {"object"}
 VALID_IMAGE_EXTENSIONS = {".jpg", ".jpeg", ".png"}
 BACKGROUND_VALUE = 0
@@ -329,6 +332,10 @@ def main() -> None:
     MASK_DIR.mkdir(parents=True, exist_ok=True)
     LOG_DIR.mkdir(parents=True, exist_ok=True)
     logger = setup_logging(LOG_DIR)
+
+    logger.info(
+        "VALID_LABELS = %s  ← change this if your Labelme labels differ", VALID_LABELS
+    )
 
     try:
         image_files = list_image_files(IMG_DIR)
